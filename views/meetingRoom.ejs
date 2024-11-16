@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Meeting Room : <%= code %></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://img.icons8.com/?size=100&id=YOhdE1LDn243&format=png&color=000000"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #d0f0fd; /* Light blue background */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding: 20px;
+        position: relative;
+      }
+      h2 {
+        color: #0077b6;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      #video-chat-rooms {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin-bottom: 20px;
+      }
+      video {
+        width: 45%;
+        background: black;
+        border: 2px solid #0077b6;
+        border-radius: 10px;
+      }
+      #user-video {
+        position: relative;
+      }
+      .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 20px 0;
+      }
+      .btn-group button {
+        padding: 12px 20px;
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .btn-group button:hover {
+        background-color: #005f8a;
+      }
+
+      /* Add active state for button press */
+      .btn-group button:active {
+        background-color: #004a6f; /* Darker shade for press */
+        transform: scale(0.95); /* Slight shrink effect on press */
+      }
+
+      /* Make the Share File button smaller */
+      #file-share-btn {
+        padding: 8px 14px;
+        font-size: 14px;
+      }
+
+      #meeting-code {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333;
+      }
+      #meeting-code button {
+        margin-left: 10px;
+        padding: 8px 16px;
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      #meeting-code button:hover {
+        background-color: #005f8a;
+      }
+      #file-input {
+        display: none;
+      }
+
+      /* Move the progress bar to the bottom */
+      #progress-bar {
+        width: 100%;
+        background-color: #e0e0e0;
+        height: 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        overflow: hidden;
+      }
+      #progress-bar-inner {
+        width: 0;
+        height: 100%;
+        background-color: #4caf50;
+        text-align: center;
+        line-height: 20px;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Meeting Room</h2>
+    <div id="video-chat-rooms">
+      <video id="user-video" autoplay muted></video>
+      <video id="peer-video" autoplay></video>
+      <video id="screen" autoplay muted style="display: none;"></video>
+    </div>
+    <div class="btn-group" id="btn-group">
+      <button id="mute-btn">Mute</button>
+      <button id="leave-room-btn">Leave Room</button>
+      <button id="hideCamera">Hide Camera</button>
+      <button id="screen-share-btn">Share Screen</button>
+      <button id="file-share-btn">Share File</button>
+      <input type="file" id="file-input" />
+    </div>
+    <div id="meeting-code">
+      Meeting Code: <%= code %>
+      <button id="copy-code-btn">Copy & Share</button>
+    </div>
+    
+    <!-- Progress Bar at the Bottom -->
+    <div id="progress-bar">
+      <div id="progress-bar-inner"></div>
+    </div>
+
+  </body>
+  <script>
+    const meetingRoomCode = "<%= code %>";
+    console.log("Room code is: " + meetingRoomCode);
+    window.meetingRoomCode = meetingRoomCode;
+
+    // Function to copy the meeting code to clipboard
+    function copyMeetingCode() {
+      const meetingCode = document.getElementById('meeting-code').innerText.trim();
+      navigator.clipboard.writeText(meetingRoomCode)
+        .then(() => alert('Meeting code copied to clipboard!'))
+        .catch((err) => console.error('Failed to copy: ', err));
+    }
+
+    // Attach click event listener to the copy button
+    document.getElementById('copy-code-btn').addEventListener('click', copyMeetingCode);
+  </script>
+  <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+  <script src="js/script.js"></script>
+</html>

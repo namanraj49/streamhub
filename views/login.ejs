@@ -1,0 +1,168 @@
+<%- include('layouts/header.ejs') %>
+
+<style>
+  * {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0d1b2a;
+    margin: 0;
+  }
+
+  .login-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 600px; /* Increase max-width */
+    border-radius: 12px;
+    background: linear-gradient(135deg, #003344, #006699);
+    padding: 40px;
+    display: flex;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 0%, #00bfa6 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    z-index: 1;
+  }
+
+  .card-content, .card-action {
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-action {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .card-action h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .form-field {
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-size: 14px;
+    color: #e0e0e0;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #001f33;
+    color: #ffffff;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    background-color: #002f4f;
+  }
+
+  .webrtc-login {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #00bfa6, #007acc);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .webrtc-login:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .form-field a {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #00bfa6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    text-align: center;
+  }
+
+  .form-field a:hover {
+    color: #007acc;
+  }
+
+  .welcome-message {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+</style>
+
+<div class="login-wrap">
+  <div class="card">
+    <div class="card-content">
+      <div class="welcome-message">WELCOME BACK!</div>
+    </div>
+    <div class="card-action">
+      <h3>Login</h3>
+    </div>
+    <div class="card-content">
+      <form action="" method="POST">
+        <div class="form-field">
+          <label for="email">Username</label>
+          <input type="email" name="email" id="email" required>
+        </div>
+        <div class="form-field">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" required>
+        </div>
+        <div class="form-field">
+          <button type="submit" class="webrtc-login">Login</button>
+          <a href="/register">Don't have an account? Sign Up</a>
+        </div>
+      </form>
+      <% if (typeof message !== 'undefined') { %>
+        <p class="error-message"><%= message %></p>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('layouts/footer.ejs') %>
